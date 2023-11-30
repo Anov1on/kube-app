@@ -1,5 +1,8 @@
 {
     "yaml.schemas": {
-        "kubernetes://schema/v1@service": "file:///c%3A/devops/kube-app/db-CIP.yaml"
+        "kubernetes://schema/v1@service": [
+            "file:///c%3A/devops/kube-app/db-CIP.yaml",
+            "file:///c%3A/devops/kube-app/rmq-dep.yaml"
+        ]
     }
 }
