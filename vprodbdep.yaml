@@ -10,38 +10,38 @@ spec:
     matchLabels:
       app: vprodb
   replicas: 1
-  template: 
+  template:
     metadata:
       labels:
         app: vprodb
     spec:
       containers:
-        - name: vprodb
-          image: vprofile/vprofiledb:V1
-            volumeMounts:
-              - name: vpro-db-data
-                mountPath: /var/lib/mysql      
-          ports:
-            - name: vprodb-port
-              containerPort: 3306
-          env: 
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom: 
-                secretKeyRef: 
-                  name: app-secret
-                  key: db-pass
+      - name: vprodb
+        image: vprofile/vprofiledb:V1
+        volumeMounts:
+        - name: vpro-db-data
+          mountPath: /var/lib/mysql
+        ports:
+        - name: vprodb-port
+          containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: db-pass
       nodeSelector:
         zone: us-east-1a
       volumes:
-        - name: vpro-db-data
-          awsElasticBlockStore:
-            volumeID: vol-075f2dcf5b3aaed9d
-            fsType: ext4
+      - name: vpro-db-data
+        awsElasticBlockStore:
+          volumeID: vol-075f2dcf5b3aaed9d
+          fsType: ext4
 
       initContainers:
-        - name: busybox
-          image: busybox:latest
-          args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
-          volumeMounts:
-            - name: vpro-db-data
-              mountPath: /var/lib/mysql
+      - name: busybox
+        image: busybox:latest
+        args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
+        volumeMounts:
+        - name: vpro-db-data
+          mountPath: /var/lib/mysql
